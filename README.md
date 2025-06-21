@@ -3,7 +3,7 @@
 This repository provides a starting point for a Kotlin/Spring Boot microservice backend and an Angular frontend. The services communicate using WebFlux and are orchestrated via Docker Compose.
 
 ## Structure
-- **backend/** – Kotlin microservices (`user-service`, `tasks-service`)
+- **backend/** – Kotlin microservices (`user-service`, `tasks-service`, `orchestrator-service`)
 - **frontend/** – Angular application
 - **docker-compose.yml** – starts databases and services
 
@@ -32,5 +32,6 @@ npm test            # in frontend
 - Angular UI with login, registration, dashboard and simple routing
 - Dark mode toggle and basic i18n support (EN/HU)
 - Basic authentication configured on backend services
+- Orchestrator service built with Spring Cloud and Axon
 
 See `backend/AGENTS.md` and `frontend/AGENTS.md` for environment specific instructions.
