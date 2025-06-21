@@ -8,7 +8,7 @@ import java.util.*
 data class Task(
     @Id @GeneratedValue
     val id: UUID? = null,
-    val description: String,
+    val description: String = "",
     val completed: Boolean = false,
     val userId: UUID? = null
 )

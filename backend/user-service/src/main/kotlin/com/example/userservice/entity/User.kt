@@ -8,8 +8,8 @@ import java.util.*
 data class User(
     @Id @GeneratedValue
     val id: UUID? = null,
-    val username: String,
-    val password: String,
+    val username: String = "",
+    val password: String = "",
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "user_roles",
