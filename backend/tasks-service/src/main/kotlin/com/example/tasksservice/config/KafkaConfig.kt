@@ -27,7 +27,9 @@ class KafkaConfig(private val properties: KafkaProperties) {
 
     @Bean
     fun repliesContainer(cf: ConsumerFactory<String, PrivilegeResponse>): KafkaMessageListenerContainer<String, PrivilegeResponse> {
-        val containerProps = ContainerProperties("privilege.responses")
+        val containerProps = ContainerProperties("privilege.responses").apply {
+            groupId = "tasks-service"
+        }
         return KafkaMessageListenerContainer(cf, containerProps)
     }
 
