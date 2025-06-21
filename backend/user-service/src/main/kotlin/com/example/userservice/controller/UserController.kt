@@ -28,15 +28,15 @@ class UserController(
     }
 
     @GetMapping("/users")
-    @PreAuthorize("hasRole('DASHBOARD')")
+    @PreAuthorize("hasAuthority('DASHBOARD')")
     fun all(): List<User> = userRepository.findAll()
 
     @GetMapping("/users/{id}")
-    @PreAuthorize("hasRole('DASHBOARD')")
+    @PreAuthorize("hasAuthority('DASHBOARD')")
     fun get(@PathVariable id: UUID): User = userRepository.findById(id).orElseThrow()
 
     @PutMapping("/users/{id}/roles")
-    @PreAuthorize("hasRole('DASHBOARD')")
+    @PreAuthorize("hasAuthority('DASHBOARD')")
     fun updateRoles(@PathVariable id: UUID, @RequestBody request: Map<String, List<String>>): User {
         val names = request["roles"] ?: emptyList()
         val roles = names.mapNotNull { roleRepository.findByName(it).orElse(null) }.toSet()
@@ -46,14 +46,14 @@ class UserController(
     }
 
     @DeleteMapping("/users/{id}")
-    @PreAuthorize("hasRole('DASHBOARD')")
+    @PreAuthorize("hasAuthority('DASHBOARD')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun delete(@PathVariable id: UUID) {
         userRepository.deleteById(id)
     }
 
     @GetMapping("/roles")
-    @PreAuthorize("hasRole('DASHBOARD')")
+    @PreAuthorize("hasAuthority('DASHBOARD')")
     fun roles(): List<Role> = roleRepository.findAll()
 
     @GetMapping("/me")

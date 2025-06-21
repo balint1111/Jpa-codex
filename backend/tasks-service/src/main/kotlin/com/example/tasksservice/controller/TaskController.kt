@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.*
 class TaskController(private val taskRepository: TaskRepository) {
 
     @GetMapping
-    @PreAuthorize("hasRole('TASK')")
+    @PreAuthorize("hasAuthority('TASK')")
     fun all(): List<Task> = taskRepository.findAll()
 
     @PostMapping
-    @PreAuthorize("hasRole('TASK')")
+    @PreAuthorize("hasAuthority('TASK')")
     @ResponseStatus(HttpStatus.CREATED)
     fun create(@RequestBody task: Task): Task = taskRepository.save(task)
 }
