@@ -1,0 +1,16 @@
+# Node
+frontend/node_modules
+
+# Gradle
+**/build
+
+# Logs
+*.log
+
+# IDE
+.idea/
+*.iml
+
+# OS
+.DS_Store
+**/.gradle

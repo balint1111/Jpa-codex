@@ -1,0 +1,44 @@
+version: "3.8"
+services:
+  user-db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: users
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5433:5432"
+  task-db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: tasks
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5434:5432"
+  user-service:
+    build: ./backend/user-service
+    ports:
+      - "8081:8081"
+    depends_on:
+      - user-db
+  tasks-service:
+    build: ./backend/tasks-service
+    ports:
+      - "8082:8082"
+    depends_on:
+      - task-db
+  orchestrator-service:
+    build: ./backend/orchestrator-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - user-service
+      - tasks-service
+  frontend:
+    build: ./frontend
+    ports:
+      - "4200:4200"
+    depends_on:
+      - user-service
+      - tasks-service
