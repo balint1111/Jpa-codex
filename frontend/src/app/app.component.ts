@@ -19,15 +19,21 @@ import { AuthService } from './services/auth.service';
           <mat-icon>menu</mat-icon>
         </button>
         <span class="flex"></span>
-        <span *ngIf="auth.user" class="mr-2">{{ auth.user.username }}</span>
-        <button mat-raised-button color="accent" (click)="logout()" *ngIf="auth.user">{{ t('logout') }}</button>
-        <mat-form-field appearance="fill" class="lang-select">
-          <mat-select [value]="currentLang" (selectionChange)="setLang($event.value)">
-            <mat-option value="en">EN</mat-option>
-            <mat-option value="hu">HU</mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-slide-toggle (change)="toggleDark()">Dark</mat-slide-toggle>
+        <button mat-button *ngIf="auth.user" [matMenuTriggerFor]="userMenu">{{ auth.user.username }}</button>
+        <mat-menu #userMenu="matMenu">
+          <div mat-menu-item>
+            <mat-form-field appearance="fill" class="lang-select m-0">
+              <mat-select [value]="currentLang" (selectionChange)="setLang($event.value)">
+                <mat-option value="en">EN</mat-option>
+                <mat-option value="hu">HU</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div mat-menu-item>
+            <mat-slide-toggle [checked]="dark" (change)="toggleDark()">{{ t('dark_mode') }}</mat-slide-toggle>
+          </div>
+          <button mat-menu-item (click)="logout()">{{ t('logout') }}</button>
+        </mat-menu>
       </mat-toolbar>
       <div class="p-4">
         <router-outlet></router-outlet>

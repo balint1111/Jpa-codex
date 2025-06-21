@@ -4,8 +4,20 @@ import { Injectable } from '@angular/core';
 export class TranslateService {
   private lang: 'en' | 'hu' = 'en';
   private messages: Record<string, any> = {
-    en: { login: 'Login', register: 'Register', logout: 'Logout' },
-    hu: { login: 'Bejelentkezés', register: 'Regisztráció', logout: 'Kijelentkezés' }
+    en: {
+      login: 'Login',
+      register: 'Register',
+      logout: 'Logout',
+      language: 'Language',
+      dark_mode: 'Dark mode'
+    },
+    hu: {
+      login: 'Bejelentkezés',
+      register: 'Regisztráció',
+      logout: 'Kijelentkezés',
+      language: 'Nyelv',
+      dark_mode: 'Sötét mód'
+    }
   };
 
   setLang(lang: 'en' | 'hu') {
