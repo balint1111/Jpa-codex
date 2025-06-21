@@ -15,4 +15,16 @@ export class UserService {
   deleteUser(id: string) {
     return this.http.delete(`${environment.userApiUrl}/users/${id}`);
   }
+
+  getUser(id: string): Observable<User> {
+    return this.http.get<User>(`${environment.userApiUrl}/users/${id}`);
+  }
+
+  getRoles(): Observable<{ name: string }[]> {
+    return this.http.get<{ name: string }[]>(`${environment.userApiUrl}/roles`);
+  }
+
+  updateRoles(id: string, roles: string[]) {
+    return this.http.put<User>(`${environment.userApiUrl}/users/${id}/roles`, { roles });
+  }
 }

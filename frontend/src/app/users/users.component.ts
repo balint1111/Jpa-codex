@@ -3,6 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { UserService } from '../services/user.service';
 import { User } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-users',
@@ -16,6 +17,7 @@ import { User } from '../services/auth.service';
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef> Actions </th>
       <td mat-cell *matCellDef="let user">
+        <button mat-button (click)="edit(user)">Edit</button>
         <button mat-button color="warn" (click)="delete(user)">Delete</button>
       </td>
     </ng-container>
@@ -30,7 +32,7 @@ export class UsersComponent implements OnInit {
   dataSource = new MatTableDataSource<User>([]);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private users: UserService) {}
+  constructor(private users: UserService, private router: Router) {}
 
   ngOnInit() {
     this.load();
@@ -47,6 +49,12 @@ export class UsersComponent implements OnInit {
   delete(user: User) {
     if (user.id) {
       this.users.deleteUser(user.id).subscribe(() => this.load());
+    }
+  }
+
+  edit(user: User) {
+    if (user.id) {
+      this.router.navigate(['/users', user.id]);
     }
   }
 }

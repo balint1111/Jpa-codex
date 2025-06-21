@@ -8,6 +8,7 @@ import { LoginComponent } from './auth/login.component';
 import { RegisterComponent } from './auth/register.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UsersComponent } from './users/users.component';
+import { UserDetailComponent } from './users/user-detail.component';
 import { TasksComponent } from './tasks/tasks.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -31,6 +32,7 @@ import { AuthInterceptor } from './services/auth.interceptor';
     RegisterComponent,
     DashboardComponent,
     UsersComponent,
+    UserDetailComponent,
     TasksComponent
   ],
   imports: [
