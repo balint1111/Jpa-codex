@@ -12,20 +12,20 @@ import org.springframework.web.bind.annotation.*
 class TaskController(private val taskRepository: TaskRepository) {
 
     @GetMapping
-    @PreAuthorize("hasAuthority('TASK')")
+    @PreAuthorize("@privilegeSaga.hasTaskPrivilege(authentication)")
     fun all(): List<Task> = taskRepository.findAll()
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('TASK')")
+    @PreAuthorize("@privilegeSaga.hasTaskPrivilege(authentication)")
     fun one(@PathVariable id: UUID): Task = taskRepository.findById(id).orElseThrow()
 
     @PostMapping
-    @PreAuthorize("hasAuthority('TASK')")
+    @PreAuthorize("@privilegeSaga.hasTaskPrivilege(authentication)")
     @ResponseStatus(HttpStatus.CREATED)
     fun create(@RequestBody task: Task): Task = taskRepository.save(task)
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAuthority('TASK')")
+    @PreAuthorize("@privilegeSaga.hasTaskPrivilege(authentication)")
     fun update(@PathVariable id: UUID, @RequestBody updated: Task): Task {
         val existing = taskRepository.findById(id).orElseThrow()
         val task = existing.copy(description = updated.description, completed = updated.completed, userId = updated.userId)
@@ -33,7 +33,7 @@ class TaskController(private val taskRepository: TaskRepository) {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('TASK')")
+    @PreAuthorize("@privilegeSaga.hasTaskPrivilege(authentication)")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun delete(@PathVariable id: UUID) {
         taskRepository.deleteById(id)
