@@ -28,6 +28,12 @@ class UserController(
     @GetMapping("/users")
     fun all(): List<User> = userRepository.findAll()
 
+    @DeleteMapping("/users/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun delete(@PathVariable id: UUID) {
+        userRepository.deleteById(id)
+    }
+
     @GetMapping("/me")
     fun me(principal: Principal): User = userRepository.findByUsername(principal.name).orElseThrow()
 }
