@@ -13,8 +13,8 @@ import java.util.*
 @RequestMapping("/api")
 class UserController(
     private val userRepository: UserRepository,
-    private val roleRepository: RoleRepository
-) {
+    private val roleRepository: RoleRepository,
+    private val passwordEncoder: org.springframework.security.crypto.password.PasswordEncoder) {
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
@@ -22,7 +22,8 @@ class UserController(
         val username = request["username"] ?: throw IllegalArgumentException("username required")
         val password = request["password"] ?: throw IllegalArgumentException("password required")
         val role = roleRepository.findById(1L).orElseGet { roleRepository.save(Role(name = "USER")) }
-        return userRepository.save(User(username = username, password = password, roles = setOf(role)))
+        val encoded = passwordEncoder.encode(password)
+        return userRepository.save(User(username = username, password = encoded, roles = setOf(role)))
     }
 
     @GetMapping("/users")
