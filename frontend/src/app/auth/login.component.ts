@@ -20,6 +20,9 @@ import { AuthService } from '../services/auth.service';
       </mat-form-field>
       <button mat-raised-button color="primary">{{ t('login') }}</button>
     </form>
+    <button mat-button (click)="router.navigate(['/register'])">
+      {{ t('register') }}
+    </button>
     <p *ngIf="error" class="error">{{ error }}</p>
   </mat-card>
   `

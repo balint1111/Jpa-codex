@@ -46,6 +46,15 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
+  fetchMe() {
+    const headers = new HttpHeaders({
+      Authorization: this.authHeader || ''
+    });
+    return this.http.get<User>(`${environment.userApiUrl}/me`, { headers }).pipe(
+      tap(user => this.currentUser = user)
+    );
+  }
+
   get authHeader() {
     return this.credentials ? `Basic ${this.credentials}` : null;
   }

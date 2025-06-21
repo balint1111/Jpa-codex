@@ -20,7 +20,8 @@ import { AuthService } from '../services/auth.service';
       </mat-form-field>
       <button mat-raised-button color="primary">{{ t('register') }}</button>
     </form>
-  </mat-card>
+    <button mat-button (click)="router.navigate(['/login'])">{{ t('login') }}</button>
+    </mat-card>
   `
 })
 export class RegisterComponent {
