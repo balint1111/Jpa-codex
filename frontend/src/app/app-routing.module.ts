@@ -11,10 +11,10 @@ import { TasksComponent } from './tasks/tasks.component';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
-  { path: 'users', component: UsersComponent, canActivate: [AuthGuard] },
-  { path: 'users/:id', component: UserDetailComponent, canActivate: [AuthGuard] },
-  { path: 'tasks', component: TasksComponent, canActivate: [AuthGuard] },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard], data: { roles: ['DASHBOARD'] } },
+  { path: 'users', component: UsersComponent, canActivate: [AuthGuard], data: { roles: ['DASHBOARD'] } },
+  { path: 'users/:id', component: UserDetailComponent, canActivate: [AuthGuard], data: { roles: ['DASHBOARD'] } },
+  { path: 'tasks', component: TasksComponent, canActivate: [AuthGuard], data: { roles: ['TASK'] } },
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
 ];
 

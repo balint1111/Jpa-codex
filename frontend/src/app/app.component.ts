@@ -8,9 +8,9 @@ import { AuthService } from './services/auth.service';
   <mat-sidenav-container>
     <mat-sidenav #drawer mode="side" [opened]="auth.user">
       <mat-nav-list>
-        <a mat-list-item routerLink="/dashboard">Dashboard</a>
-        <a mat-list-item routerLink="/users" *ngIf="hasRole('ADMIN')">Users</a>
-        <a mat-list-item routerLink="/tasks">Tasks</a>
+        <a mat-list-item routerLink="/dashboard" *ngIf="hasRole('DASHBOARD')">Dashboard</a>
+        <a mat-list-item routerLink="/users" *ngIf="hasRole('DASHBOARD')">Users</a>
+        <a mat-list-item routerLink="/tasks" *ngIf="hasRole('TASK')">Tasks</a>
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
