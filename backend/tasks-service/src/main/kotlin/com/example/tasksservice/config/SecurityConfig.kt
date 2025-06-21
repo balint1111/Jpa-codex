@@ -8,6 +8,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.authentication.AuthenticationProvider
+import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
@@ -15,7 +17,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-class SecurityConfig {
+class SecurityConfig(private val authProvider: AuthenticationProvider) {
     @Bean
     fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
 
@@ -25,6 +27,7 @@ class SecurityConfig {
             .cors()
             .and()
             .csrf().disable()
+            .authenticationProvider(authProvider)
             .authorizeHttpRequests { it.anyRequest().authenticated() }
             .httpBasic()
         return http.build()
@@ -41,4 +44,7 @@ class SecurityConfig {
         source.registerCorsConfiguration("/**", config)
         return source
     }
+
+    @Bean
+    fun webClient(builder: WebClient.Builder): WebClient = builder.build()
 }
