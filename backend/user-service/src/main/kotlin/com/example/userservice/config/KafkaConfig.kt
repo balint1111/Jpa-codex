@@ -26,9 +26,13 @@ class KafkaConfig(private val properties: KafkaProperties) {
         KafkaTemplate(pf)
 
     @Bean
-    fun kafkaListenerContainerFactory(cf: ConsumerFactory<String, Any>): ConcurrentKafkaListenerContainerFactory<String, Any> {
+    fun kafkaListenerContainerFactory(
+        cf: ConsumerFactory<String, Any>,
+        kt: KafkaTemplate<String, Any>
+    ): ConcurrentKafkaListenerContainerFactory<String, Any> {
         val factory = ConcurrentKafkaListenerContainerFactory<String, Any>()
         factory.consumerFactory = cf
+        factory.setReplyTemplate(kt)
         return factory
     }
 }
