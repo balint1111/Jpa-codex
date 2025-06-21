@@ -40,5 +40,10 @@ body { margin: 0; font-family: Arial, sans-serif; }
 .mr-2 { margin-right: 0.5rem; }
 .lang-select { width: 80px; margin-right: 0.5rem; }
 .toolbar-select .mat-form-field-flex { background-color: inherit !important; color: inherit; }
+.lang-panel { background-color: #3f51b5; color: #fff; }
+.lang-panel .mat-option.mat-selected:not(.mat-option-disabled),
+.lang-panel .mat-option:not(.mat-option-disabled):hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
 .menu-item { padding: 0.5rem 1rem; display: flex; align-items: center; cursor: pointer; }
 .m-0 { margin: 0; }

@@ -20,7 +20,7 @@ import { AuthService } from './services/auth.service';
         </button>
         <span class="flex"></span>
         <mat-form-field appearance="fill" color="primary" class="lang-select toolbar-select">
-          <mat-select [value]="currentLang" (selectionChange)="setLang($event.value)">
+          <mat-select [value]="currentLang" (selectionChange)="setLang($event.value)" panelClass="lang-panel">
             <mat-option value="en">EN</mat-option>
             <mat-option value="hu">HU</mat-option>
           </mat-select>
