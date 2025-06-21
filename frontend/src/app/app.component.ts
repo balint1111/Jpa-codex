@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TranslateService } from './i18n/translate.service';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,6 @@ import { Component } from '@angular/core';
   <router-outlet></router-outlet>
   `
 })
-import { TranslateService } from './i18n/translate.service';
 
 export class AppComponent {
   dark = false;
