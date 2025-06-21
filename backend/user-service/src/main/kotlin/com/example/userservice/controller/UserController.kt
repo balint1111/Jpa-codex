@@ -21,7 +21,7 @@ class UserController(
     fun register(@RequestBody request: Map<String, String>): User {
         val username = request["username"] ?: throw IllegalArgumentException("username required")
         val password = request["password"] ?: throw IllegalArgumentException("password required")
-        val role = roleRepository.findById(1L).orElse(Role(name = "USER"))
+        val role = roleRepository.findById(1L).orElseGet { roleRepository.save(Role(name = "USER")) }
         return userRepository.save(User(username = username, password = password, roles = setOf(role)))
     }
 
