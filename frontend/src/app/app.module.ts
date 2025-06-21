@@ -22,6 +22,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
 import { AuthInterceptor } from './services/auth.interceptor';
 
@@ -53,6 +54,7 @@ import { AuthInterceptor } from './services/auth.interceptor';
     MatSlideToggleModule,
     MatMenuModule,
     MatFormFieldModule,
+    MatSelectModule,
     MatCardModule
   ],
   providers: [
