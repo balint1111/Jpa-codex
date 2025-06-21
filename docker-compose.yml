@@ -28,3 +28,10 @@ services:
       - "8082:8082"
     depends_on:
       - task-db
+  frontend:
+    build: ./frontend
+    ports:
+      - "4200:4200"
+    depends_on:
+      - user-service
+      - tasks-service

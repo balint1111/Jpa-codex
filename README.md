@@ -13,14 +13,10 @@ This repository provides a starting point for a Kotlin/Spring Boot microservice 
 - Docker
 
 ## Running
-1. Build and run all services using Docker Compose:
-   ```sh
-   docker-compose up --build
-   ```
-2. Frontend dev server:
-   ```sh
-   cd frontend && npm install && npm start
-   ```
+Run all services (including the Angular frontend) using Docker Compose:
+```sh
+docker-compose up --build
+```
 
 ## Testing
 Run backend and frontend tests before committing code changes:
