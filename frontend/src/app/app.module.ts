@@ -10,6 +10,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { UsersComponent } from './users/users.component';
 import { UserDetailComponent } from './users/user-detail.component';
 import { TasksComponent } from './tasks/tasks.component';
+import { TaskDetailComponent } from './tasks/task-detail.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -24,6 +25,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { AuthInterceptor } from './services/auth.interceptor';
 
 @NgModule({
@@ -34,7 +36,8 @@ import { AuthInterceptor } from './services/auth.interceptor';
     DashboardComponent,
     UsersComponent,
     UserDetailComponent,
-    TasksComponent
+    TasksComponent,
+    TaskDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +58,8 @@ import { AuthInterceptor } from './services/auth.interceptor';
     MatMenuModule,
     MatFormFieldModule,
     MatSelectModule,
-    MatCardModule
+    MatCardModule,
+    MatCheckboxModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }

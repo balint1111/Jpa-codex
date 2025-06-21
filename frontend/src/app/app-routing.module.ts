@@ -7,6 +7,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { UsersComponent } from './users/users.component';
 import { UserDetailComponent } from './users/user-detail.component';
 import { TasksComponent } from './tasks/tasks.component';
+import { TaskDetailComponent } from './tasks/task-detail.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'users', component: UsersComponent, canActivate: [AuthGuard], data: { roles: ['DASHBOARD'] } },
   { path: 'users/:id', component: UserDetailComponent, canActivate: [AuthGuard], data: { roles: ['DASHBOARD'] } },
   { path: 'tasks', component: TasksComponent, canActivate: [AuthGuard], data: { roles: ['TASK'] } },
+  { path: 'tasks/:id', component: TaskDetailComponent, canActivate: [AuthGuard], data: { roles: ['TASK'] } },
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
 ];
 
