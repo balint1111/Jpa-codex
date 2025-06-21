@@ -7,27 +7,33 @@ import org.springframework.security.core.Authentication
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.stereotype.Component
-import org.springframework.web.reactive.function.client.WebClient
-import org.springframework.web.reactive.function.client.WebClientResponseException
+import org.apache.kafka.clients.producer.ProducerRecord
+import org.apache.kafka.common.header.internals.RecordHeader
+import org.springframework.kafka.requestreply.ReplyingKafkaTemplate
+import org.springframework.kafka.support.KafkaHeaders
+import com.example.tasksservice.service.PrivilegeSaga.PrivilegeRequest
+import com.example.tasksservice.service.PrivilegeSaga.PrivilegeResponse
 
 @Component
-class RemoteAuthProvider(private val webClient: WebClient) : AuthenticationProvider {
-    data class Role(val name: String)
-    data class UserResponse(val username: String, val roles: List<Role>)
+class RemoteAuthProvider(
+    private val kafka: ReplyingKafkaTemplate<String, PrivilegeRequest, PrivilegeResponse>
+) : AuthenticationProvider {
 
     override fun authenticate(authentication: Authentication): Authentication {
         val username = authentication.name
         val password = authentication.credentials.toString()
-        try {
-            val user = webClient.get()
-                .uri("http://user-service:8081/api/me")
-                .headers { it.setBasicAuth(username, password) }
-                .retrieve()
-                .bodyToMono(UserResponse::class.java)
-                .block() ?: throw BadCredentialsException("Bad credentials")
-            val authorities = user.roles.map { SimpleGrantedAuthority(it.name) }
-            return UsernamePasswordAuthenticationToken(username, password, authorities)
-        } catch (ex: WebClientResponseException) {
+        val request = PrivilegeRequest(username, password)
+        val record = ProducerRecord<String, PrivilegeRequest>("privilege.requests", request).apply {
+            headers().add(RecordHeader(KafkaHeaders.REPLY_TOPIC, "privilege.responses".toByteArray()))
+        }
+        return try {
+            val response = kafka.sendAndReceive(record).get(5, java.util.concurrent.TimeUnit.SECONDS).value()
+            if (response.roles.isEmpty()) {
+                throw BadCredentialsException("Bad credentials")
+            }
+            val authorities = response.roles.map { SimpleGrantedAuthority(it) }
+            UsernamePasswordAuthenticationToken(username, password, authorities)
+        } catch (ex: Exception) {
             throw BadCredentialsException("Bad credentials")
         }
     }
