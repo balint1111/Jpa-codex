@@ -20,9 +20,13 @@ import { AuthService } from './services/auth.service';
         </button>
         <span class="flex"></span>
         <span *ngIf="auth.user" class="mr-2">{{ auth.user.username }}</span>
-        <button mat-button (click)="logout()" *ngIf="auth.user">Logout</button>
-        <button mat-button (click)="setLang('en')">EN</button>
-        <button mat-button (click)="setLang('hu')">HU</button>
+        <button mat-raised-button color="accent" (click)="logout()" *ngIf="auth.user">{{ t('logout') }}</button>
+        <mat-form-field appearance="fill" class="lang-select">
+          <mat-select [value]="currentLang" (selectionChange)="setLang($event.value)">
+            <mat-option value="en">EN</mat-option>
+            <mat-option value="hu">HU</mat-option>
+          </mat-select>
+        </mat-form-field>
         <mat-slide-toggle (change)="toggleDark()">Dark</mat-slide-toggle>
       </mat-toolbar>
       <div class="p-4">
@@ -35,15 +39,26 @@ import { AuthService } from './services/auth.service';
 
 export class AppComponent {
   dark = false;
-  constructor(public auth: AuthService, private translate: TranslateService) {}
+  constructor(public auth: AuthService, private translate: TranslateService) {
+    document.body.classList.add('light-theme');
+  }
+
+  get currentLang() {
+    return this.translate.currentLang;
+  }
 
   toggleDark() {
     this.dark = !this.dark;
-    document.body.classList.toggle('dark', this.dark);
+    document.body.classList.toggle('dark-theme', this.dark);
+    document.body.classList.toggle('light-theme', !this.dark);
   }
 
   setLang(lang: 'en' | 'hu') {
     this.translate.setLang(lang);
+  }
+
+  t(key: string) {
+    return this.translate.t(key);
   }
 
   logout() {
